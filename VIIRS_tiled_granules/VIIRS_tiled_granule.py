@@ -144,3 +144,9 @@ class VIIRSTiledGranule:
         """
         with h5py.File(self.filename_absolute, "r") as file:
             return list(file[f"HDFEOS/GRIDS/{grid}/Data Fields/"].keys())
+    
+    def variable(self, variable: str) -> Raster:
+        if hasattr(self, variable):
+            return getattr(self, variable)
+        else:
+            raise AttributeError(f"Variable '{variable}' not found in VIIRSTiledGranule.")
