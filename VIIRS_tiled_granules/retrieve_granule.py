@@ -1,17 +1,33 @@
 import os
 from os.path import join, abspath, expanduser
+from pathlib import Path
 import earthaccess
 from modland import generate_modland_grid
 from .VIIRS_tiled_granules import VIIRSTiledGranule
 from .granule_ID import *
 
-def anonymize_home_path(file_path: str) -> str:
+def anonymize_home_path(file_path) -> str:
+    """
+    Anonymize the home directory in a file path by replacing it with '~'.
+    
+    Args:
+        file_path: File path as string or Path object
+        
+    Returns:
+        str: Anonymized path as string
+    """
+    # Convert to string if it's a Path object
+    if isinstance(file_path, Path):
+        file_path_str = str(file_path)
+    else:
+        file_path_str = file_path
+    
     home_dir = os.path.expanduser("~")
     
-    if file_path.startswith(home_dir):
-        return file_path.replace(home_dir, "~", 1)
+    if file_path_str.startswith(home_dir):
+        return file_path_str.replace(home_dir, "~", 1)
     
-    return file_path
+    return file_path_str
 
 def retrieve_granule(
         remote_granule: earthaccess.results.DataGranule, 
