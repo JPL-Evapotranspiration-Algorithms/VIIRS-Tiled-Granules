@@ -14,6 +14,8 @@ from .retrieve_granule import retrieve_granule
 from .VIIRS_tiled_granule import VIIRSTiledGranule
 
 class VIIRSTiledProductConnection:
+    GranuleClass = VIIRSTiledGranule
+
     def __init__(
             self,
             concept_ID: str,
@@ -43,7 +45,7 @@ class VIIRSTiledProductConnection:
             self,
             date_UTC: Union[date, str] = None,
             tile: str = None,
-            download_directory: str = DOWNLOAD_DIRECTORY) -> VIIRSTiledGranule:
+            download_directory: str = DOWNLOAD_DIRECTORY) -> GranuleClass:
         return retrieve_granule(
             date_UTC=date_UTC,
             tile=tile,
